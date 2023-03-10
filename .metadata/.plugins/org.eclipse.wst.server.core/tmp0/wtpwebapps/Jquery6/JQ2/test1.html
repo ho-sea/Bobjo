@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" 
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            // 이벤트 : 클라이언트가 페이지에서 수행하는 모든 동작
+            // $('input').bind("이벤트",function(){});
+            // $('input').bind("click", function(){
+            //     alert("제이쿼리 실행!");
+            // });
+
+            // $('input').click(function(){
+            //     alert("제이쿼리 실행!222");
+            // });
+
+            // h2 태그 클릭시마다 "+"문자 추가
+            $('h2').click(function(){
+                $(this).html(function(idx,html){
+                    return html+"+";
+                });
+            });
+
+            // 이미지태그 마우스 올렸을 때
+            // $('img').mouseover(function(){
+            //     // 다른 이미지로 변경
+            //     $('img').attr('src', "../img/balloon.jpg");
+            // });
+            // $('img').mouseleave(function(){
+            //     $('img').attr('src', "../img/coffee.jpg");
+            // });
+            $('img').mouseover(function(){
+                $('img').attr('src', "../img/balloon.jpg");
+            }).mouseout(function(){
+                $('img').attr('src', "../img/coffee.jpg");
+            });
+
+            $('textarea').keyup(function(){
+                var txt = $('textarea').val().length;
+                $('h3').html(" 글자수 : " + (200-txt));
+            });
+            // 사용자가 200자 이상 입력했을 경우 글자색 RED, 이하면 BLACK
+            $('textarea').keydown(function(){
+                var txt = $('textarea').val().length;
+                if(txt >= 200){
+                    $('h3').css('color', 'red');
+                }else{
+                    $('h3').css('color', 'black');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" value="버튼" onclick="alert('@@@');">
+    <hr>
+    <h2>head-0</h2>
+    <h2>head-1</h2>
+    <h2>head-2</h2>
+    <hr>
+    <img src="../img/coffee.jpg" width="150">
+    <hr>
+    <h3> 글자수 : 200 </h3>
+    <textarea rows="5" cols="20"></textarea>
+</body>
+</html>

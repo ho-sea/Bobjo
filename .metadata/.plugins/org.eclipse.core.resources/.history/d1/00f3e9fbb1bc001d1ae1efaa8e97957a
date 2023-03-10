@@ -1,0 +1,208 @@
+package com.itwillbs.admin.order.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.itwillbs.admin.goods.db.GoodsDTO;
+import com.itwillbs.basket.db.BasketDTO;
+
+public class OrderDAO {
+
+	// 공통변수
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql = "";
+
+	// 공통 기능
+	// 1) db연결
+	private Connection getCon() throws Exception {
+
+		// Context 객체(Project) 생성
+		Context initCTX = new InitialContext();
+		// DB정보 연동
+		DataSource ds = (DataSource) initCTX.lookup("java:comp/env/jdbc/model2");
+		con = ds.getConnection();
+
+		return con;
+	}
+
+	// 2) 자원해제
+	public void closeDB() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (con != null)
+				con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addOrder(OrderDTO orDTO, List basketList, List goodsList) {
+		int o_num = 0;	// 일련번호
+		int trade_num = 0;	// 주문번호
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		// 일련번호 계산하기
+		try {
+			// 1.2 DB연결
+			con = getCon();
+			// 3. sql작성 & pstmt 객체
+			sql = "select max(o_num) from itwill_order";
+			pstmt = con.prepareStatement(sql);
+			// 4. sql 실행
+			rs = pstmt.executeQuery();
+			// 데이터 처리
+			if(rs.next()) {
+				o_num = rs.getInt(1) + 1;
+			}
+			System.out.println(" DAO : o_num = "+o_num);
+			trade_num = o_num;
+			System.out.println(" DAO : trade_num = "+trade_num);
+			
+			////////////////////////////////////////////////////
+			// 주문정보 저장
+			BasketDTO bkDTO;
+			GoodsDTO gDTO;
+			for(int i=0;i<basketList.size();i++) {
+				bkDTO = (BasketDTO) basketList.get(i);
+				gDTO = (GoodsDTO) goodsList.get(i);
+				
+				sql = "insert into itwill_order values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,"
+						+ "?, ?, ?, ?, ?, ?, now(), ?, now(), ?)";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, o_num);
+				pstmt.setString(2, sdf.format(cal.getTime())+"-"+trade_num);	//ex)20230228-1
+				pstmt.setInt(3, bkDTO.getB_g_num());
+				pstmt.setString(4, gDTO.getName());
+				pstmt.setInt(5, bkDTO.getB_g_amount());
+				pstmt.setString(6, bkDTO.getB_g_size());
+				pstmt.setString(7, bkDTO.getB_g_color());
+				
+				pstmt.setString(8, orDTO.getO_m_id());
+				
+				pstmt.setString(9, orDTO.getO_r_name());
+				pstmt.setString(10, orDTO.getO_r_addr1());
+				pstmt.setString(11, orDTO.getO_r_addr2());
+				pstmt.setString(12, orDTO.getO_r_phone());
+				pstmt.setString(13, orDTO.getO_r_msg());
+				
+				pstmt.setInt(14, gDTO.getPrice() * bkDTO.getB_g_amount());
+				
+				pstmt.setString(15, orDTO.getO_trade_type());
+				pstmt.setString(16, orDTO.getO_trade_payer());
+				
+				pstmt.setString(17, "");	// 운송장번호
+				
+				// 주문상태 : 0 - 대기 중, 1 - 발송준비, 2 - 발송완료, 3 - 배송 중, 4 - 배송완료, 5 - 주문 취소
+				pstmt.setInt(18, 0);
+				
+				// pstmt.execute
+				pstmt.executeUpdate();
+
+				o_num++;
+			}
+			System.out.println(" DAO : 주문정보 저장완료!");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeDB();
+		}
+	}
+
+	// 주문목록 조회
+	public List getOrderList(String id) {
+		List orderList = new ArrayList();
+		try {
+			con = getCon();
+			sql = "SELECT O_TRADE_NUM, O_G_NAME, O_G_AMOUNT, O_G_SIZE, O_G_COLOR,"
+					+ " SUM(O_SUM_MONEY) AS O_SUM_MONEY, O_TRANS_NUM, O_DATE, O_STATUS, O_TRADE_TYPE"
+					+ " FROM ITWILL_ORDER WHERE O_M_ID = ? "
+					+ " GROUP BY O_TRADE_NUM"
+					+ " ORDER BY O_TRADE_NUM DESC";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				OrderDTO dto = new OrderDTO();
+				
+				dto.setO_trade_num(rs.getString("o_trade_num"));
+				dto.setO_g_name(rs.getString("o_g_name"));
+				dto.setO_g_amount(rs.getInt(3));
+				dto.setO_g_size(rs.getString(4));
+				dto.setO_g_color(rs.getString(5));
+				dto.setO_sum_money(rs.getInt(6));
+				dto.setO_trans_num(rs.getString(7));
+				dto.setO_date(rs.getDate(8));
+				dto.setO_status(rs.getInt(9));
+				dto.setO_trade_type(rs.getString(10));
+				
+				orderList.add(dto);
+			}
+			
+			System.out.println(" DAO : 주문 정보 저장완료 ");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		return orderList;
+	}
+	// 주문목록 조회
+
+	// 주문번호 주문정보 조회
+	public List getOrderDetail(String trade_num) {
+		List detailList = new ArrayList<>();
+		
+		try {
+			con = getCon();
+			sql = "SELECT * FROM ITWILL_ORDER WHERE O_TRADE_NUM = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, trade_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				OrderDTO dto = new OrderDTO();
+				
+				dto.setO_date(rs.getDate("o_date"));
+				dto.setO_g_amount(rs.getInt("o_g_amount"));
+				dto.setO_g_color(rs.getString("o_g_color"));
+				dto.setO_g_name(rs.getString("o_g_name"));
+				dto.setO_g_size(rs.getString("o_g_size"));
+				dto.setO_trade_num(rs.getString("o_trade_num"));
+				dto.setO_trans_num(rs.getString("o_trans_num"));
+				dto.setO_sum_money(rs.getInt("o_sum_money"));
+				dto.setO_status(rs.getInt("o_status"));
+				dto.setO_trade_type(rs.getString("o_trade_type"));
+				
+				detailList.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		
+		return detailList;
+	}
+	// 주문번호 주문정보 조회
+}

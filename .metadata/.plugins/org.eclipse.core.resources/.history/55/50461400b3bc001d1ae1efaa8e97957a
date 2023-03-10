@@ -1,0 +1,68 @@
+package com.itwillbs.admin.order.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class AdminOrderDAO {
+
+	// 공통변수
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql = "";
+
+	// 공통 기능
+	// 1) db연결
+	private Connection getCon() throws Exception {
+
+		// Context 객체(Project) 생성
+		Context initCTX = new InitialContext();
+		// DB정보 연동
+		DataSource ds = (DataSource) initCTX.lookup("java:comp/env/jdbc/model2");
+		con = ds.getConnection();
+
+		return con;
+	}
+
+	// 2) 자원해제
+	public void closeDB() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (con != null)
+				con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List getAdminOrderList(String id) {
+		List orderList = new ArrayList();
+		
+		try {
+			con = getCon();
+			sql = "SELECT O_TRADE_NUM, O_G_NAME, O_G_AMOUNT, O_G_SIZE, O_G_COLOR,"
+					+ " SUM(O_SUM_MONEY) AS O_SUM_MONEY, O_TRANS_NUM, O_DATE, O_STATUS, O_TRADE_TYPE"
+					+ " FROM ITWILL_ORDER WHERE O_M_ID = ? "
+					+ " GROUP BY O_TRADE_NUM"
+					+ " ORDER BY O_TRADE_NUM DESC";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return orderList;
+	}
+}

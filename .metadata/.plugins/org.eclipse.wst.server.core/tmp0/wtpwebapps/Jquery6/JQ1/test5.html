@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" 
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            //html(), text()
+            var ht = $('h2').html();    // => 제일 처음 요소
+            var tx = $('h2').text();    // => 모든 요소
+
+            $('h2').text("hello!");
+            $('h2').html("ITWILL");
+            // => 변경하려는 문자정보를 전달하면 해당하는 모든 요소의 값이 바뀜
+
+            $('div').text("<h3>안녕하세요!</h3>");  // html 태그 무시(문자 그대로 화면 표시)
+            $('div').html("<h3>안녕하세요!</h3>");  // html 태그 적용
+
+
+            $('div').html(function(idx, old){
+                // alert(idx + "/" + old);
+                return "<h"+(idx+1)+">안녕하세요!</h"+(idx+1)+">";
+            });
+
+            $('div').append(" Hello ");     // 요소 뒤에 데이터 추가
+            $('div').prepend(" Hello2 ");   // 요소 앞에 데이터 추가
+            
+            
+            // 2차원배열 => JSON 타입
+            var data = [
+                {name : "홍길동", addr : "부산"},
+                {name : "홍경래", addr : "의주"},
+                {name : "장길산", addr : "평양"},
+                {name : "이성계", addr : "전주"},
+                {name : "임꺽정", addr : "광주"}
+            ];
+
+            for(var i = 0; i < data.length; i++){
+                $('table').append("<tr><td>" + data[i].name + "</td><td>" + data[i].addr + "</td></tr>");
+            }
+
+            // 테이블에 이름, 주소 추가
+            // $('table').append(function(idx){
+            //     return "<tr><td>" + data[idx].name + "</td></tr>";
+            // });
+
+            // $(요소).each(function(){동작})
+            // $.each(요소, function(){동작})
+            
+            $(data).each(function(idx, element){
+                // alert(idx + " / " + element.name);
+                $('table').append("<tr><td>" + element.name + "</td><td>" + element.addr + "</td></tr>");
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <h1> 태그의 값 변경하기 </h1>
+
+    <h2> head-0 </h2>
+    <h2> head-1 </h2>
+    <h2> head-2 </h2>
+
+    <hr>
+    <div>00</div>
+    <div>11</div>
+    <div>22</div>
+
+    <hr>
+    <table border="1">
+        <tr>
+            <td> 이름 </td>
+            <td> 주소 </td>
+        </tr>
+    </table>
+</body>
+</html>

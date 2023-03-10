@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;list&apos; in &apos;com.itwillbs.order.db.OrderDAO.getOrderList(...)&apos; to &apos;orderList&apos;&#x0D;&#x0A;- Original project: &apos;Model2&apos;&#x0D;&#x0A;- Original element: &apos;com.itwillbs.order.db.OrderDAO.getOrderList(String).list&apos;&#x0D;&#x0A;- Renamed element: &apos;list&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;list&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src\/main\/java&lt;com.itwillbs.order.db{OrderDAO.java[OrderDAO~getOrderList~QString;@list!3430!3457!3435!3438!QList;!0!false" name="orderList" references="true" stamp="1677718401721" version="1.0"/>
+</session>

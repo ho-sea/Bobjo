@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" 
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            // attr()
+            var src = $('img').attr('src');
+            // 이미지 - border 5
+            //$('img').attr('border', 5);
+            // border 5, 10, 15
+            // $('img').attr('border', function(idx){
+            //     return (idx+1)*5;
+            // });
+
+            // 테두리 (5,10,15), 가로길이 (100,200,300)
+            // $('img').attr('width', function(idx){
+            //     return (idx+1) * 100;
+            // }); 는 아래와 같음
+            $('img').attr({
+                'border' : function(idx) {
+                    return (idx+1)*5;
+                },
+                'width':function(idx){
+                    return (idx+1)*100;
+                }
+            });
+            
+        });
+    </script>
+</head>
+<body>
+    <img src="../img/pic1.jpg">
+    <img src="../img/pic2.jpg">
+    <img src="../img/pic3.jpg">
+</body>
+</html>

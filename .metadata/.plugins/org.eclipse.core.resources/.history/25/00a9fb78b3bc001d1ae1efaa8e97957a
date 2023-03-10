@@ -1,0 +1,37 @@
+package com.itwillbs.admin.order.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+public class AdminOrderListAction implements Action {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println(" M : AdminOrderListAction_execute() 호출 ");
+		
+		// 관리자 - 세션 제어
+		HttpSession session = request.getSession();
+		
+		String id = (String) session.getAttribute("id");
+		
+		ActionForward forward = new ActionForward();
+		if(id == null || !id.equals("admin")) {
+			forward.setPath("./MemberLogin.me");
+			forward.setRedirect(true);
+			return forward;
+		}
+		// AdminOrderDAO 객체 - getAdminOrderList()
+		
+		
+		// request 영역 저장
+		
+		
+		// ./adminorder/admin_order_list.jsp
+		
+		forward.setPath(null);
+		forward.setRedirect(false);
+		return forward;
+	}
+
+}

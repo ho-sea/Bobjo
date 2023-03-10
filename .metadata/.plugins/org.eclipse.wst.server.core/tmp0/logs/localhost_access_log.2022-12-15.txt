@@ -1,0 +1,15 @@
+127.0.0.1 - - [15/Dec/2022:11:26:21 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:26:21 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 333
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:26:21 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:26:33 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 334
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:35:04 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 608
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:47:13 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 793
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:47:54 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 819
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:11:50:20 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 950
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:13:38 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 1777
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:14:15 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 1789
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:19:18 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 1843
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:41:51 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 2267
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:41:51 +0900] "GET /HtmlStudy/img/power.png HTTP/1.1" 200 13890
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:44:44 +0900] "GET /HtmlStudy/javaScript/Object1.html HTTP/1.1" 200 2531
+0:0:0:0:0:0:0:1 - - [15/Dec/2022:12:44:44 +0900] "GET /HtmlStudy/img/power.png HTTP/1.1" 304 -

@@ -1,0 +1,5 @@
+package com.itwillbs.admin.order.action;
+
+public class AdminOrderFrontController {
+
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js" 
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function(){
+			// Ajax(Asynchoronous JavaScript and XML) : 비동기 방식의 javascript, xml
+			
+			// 동기 방식 : 서버에 요청을 보내면, 응답을 받아야 다음 동작 수행
+			// 비동기 방식 : 서버에 요청을 보내면, 응답 여부와 상관없이 다음 동작 수행
+			//			(페이지 전환, 화면전환이 없음)
+			
+			/* $.ajax({
+				url:"이동할 페이지",
+				type:"전송할 방식(get/post)",
+				data:"전송할 데이터",
+				dataType:"요청한 데이터타입(html,xml,json,text)",
+				success: function(){
+					// 페이지 이동 후 성공 동작
+				},
+				error: function(){
+					// 페이지 이동 후 실패 동작
+				}
+			}); */
+			
+			$.ajax({
+				url:"String1.jsp",
+				success:function(data){
+					// data : 화면에 출력되는 데이터
+					//alert("String1.jsp 다녀왔음");
+					//alert(data);	// data는 String1.jsp의 전체 내용
+					$('body').append(data);
+				},
+				error:function(){
+					alert(" 에러 발생! ");
+					console.log(data);
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>ajaxString</h1>
+</body>
+</html>

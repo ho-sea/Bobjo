@@ -1,0 +1,127 @@
+package com.itwillbs.admin.order.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import com.itwillbs.order.db.OrderDTO;
+
+public class AdminOrderDAO {
+
+	// 공통변수
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql = "";
+
+	// 공통 기능
+	// 1) db연결
+	private Connection getCon() throws Exception {
+
+		// Context 객체(Project) 생성
+		Context initCTX = new InitialContext();
+		// DB정보 연동
+		DataSource ds = (DataSource) initCTX.lookup("java:comp/env/jdbc/model2");
+		con = ds.getConnection();
+
+		return con;
+	}
+
+	// 2) 자원해제
+	public void closeDB() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (con != null)
+				con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List getAdminOrderList() {
+		List adminorderList = new ArrayList();
+
+		try {
+			con = getCon();
+			sql = "SELECT O_TRADE_NUM, O_G_NAME, O_G_AMOUNT, O_G_SIZE, O_G_COLOR,"
+					+ " SUM(O_SUM_MONEY) AS O_SUM_MONEY,"
+					+ " O_TRANS_NUM, O_DATE, O_STATUS, O_TRADE_TYPE, O_M_ID"
+					+ " FROM ITWILL_ORDER " 
+					+ " GROUP BY O_TRADE_NUM" 
+					+ " ORDER BY O_TRADE_NUM DESC";
+			pstmt = con.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				OrderDTO dto = new OrderDTO();
+
+				dto.setO_trade_num(rs.getString("o_trade_num"));
+				dto.setO_g_name(rs.getString("o_g_name"));
+				dto.setO_g_amount(rs.getInt(3));
+				dto.setO_g_size(rs.getString(4));
+				dto.setO_g_color(rs.getString(5));
+				dto.setO_sum_money(rs.getInt(6));
+				dto.setO_trans_num(rs.getString(7));
+				dto.setO_date(rs.getDate(8));
+				dto.setO_status(rs.getInt(9));
+				dto.setO_trade_type(rs.getString(10));
+				dto.setO_m_id(rs.getString(11));
+
+				adminorderList.add(dto);
+			}
+
+			System.out.println(" DAO : 주문 정보 저장완료 ");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+
+		return adminorderList;
+	}
+
+	// 특정 주문정보 조회
+	public List getAdminOrderDetail(String trade_num) {
+		OrderDTO dto;
+		
+		try {
+			con = getCon();
+			sql = "SELECT * FROM ITWILL_ORDER WHERE O_TRADE_NUM = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, trade_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				dto = new OrderDTO();
+				
+				dto.setO_date(rs.getDate("o_date"));
+				dto.setO_g_name(rs.getString("o_g_name"));
+				dto.setO_g_amount(rs.getInt("o_g_amount"));
+				dto.setO_g_size(rs.getString("o_g_size"));
+				dto.setO_g_color(rs.getString("o_g_color"));
+				dto.setO_trade_num(rs.getString("o_trade_num"));
+				dto.setO_trans_num(rs.getString("o_trans_num"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		return null;
+	}
+	// 특정 주문정보 조회
+}
