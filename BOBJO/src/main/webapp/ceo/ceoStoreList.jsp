@@ -10,6 +10,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>BOBJO</title>
+        
+ 
 <style>
 form {
 	  display: flex;
@@ -72,8 +74,8 @@ table {
 }
 
 th, td {
-	padding: 8px;
-	text-align: left;
+	padding: 5px;
+	text-align: center;
 	border-bottom: 1px solid #ddd;
 }
 
@@ -90,7 +92,7 @@ img {
 	max-height: 100px;
 }
 
-.btn-modify, .btn-delete {
+.btn-modify, .btn-delete, .btn-addmenu {
 	display: inline-block;
 	margin-right: 10px;
 	padding: 5px 10px;
@@ -104,94 +106,64 @@ img {
 .btn-modify:hover, .btn-delete:hover {
 	background-color: #3e8e41;
 }
+#cMenu {
+  color: green;
+  text-decoration: none;
+}
+input[type="button"] {
+        background-color: buttonhighlight;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    input[type="button"]:hover {
+        background-color: #3e8e41;
+    }
+input[type="checkbox"] {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 70%;
+  position: relative;
+   bottom: 40px;
+}	
+    
 </style>
 <link href="./css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
+<script type="text/javascript">
+	 var count = 1;
+	 var addCount;
+	 
+	//행추가
+	function addInputBox() {
+	 for(var i=1; i<=count; i++) {
+	  if(!document.getElementsByName("store_img"+i)[0]) {
+	   addCount = i;
+	   break;
+	  }
+	  else addCount = count;
+	 }
+	
+	 var addStr = "<tr><td width=140><input type=file name=store_img"+addCount+" size=40></td></tr>";
+	 var table = document.getElementById("dynamic_table");
+	 var newRow = table.insertRow();
+	 var newCell = newRow.insertCell();
+	 newCell.innerHTML = addStr;
+	 count++;
+	}
+</script>
+</head>
     <body>
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="./Main.me">BOBJO</a>
-        
-           
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                        
-                        <c:if test="${ceo_num == null }">
-                            <div class="sb-sidenav-menu-heading">마이페이지</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                예약관리
-                            </a>
-                            <!-- <div class="sb-sidenav-menu-heading">예약</div> -->
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                방문기록      
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav"> </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                북마크
-                                </a>
-                            
-                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages"> </nav>
-                            </div>
-                       </c:if>
-                           
-                            <div class="sb-sidenav-menu-heading">계정</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                회원정보수정
-                            </a>
-                            <a class="nav-link" href="./MemberDeleteAction.me">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                회원탈퇴
-                            </a>
-                            
-                            <c:if test="${ceo_num != null }">
-	                               <div class="sb-sidenav-menu-heading">사업주</div>
-	                            <a class="nav-link" href="./CeoAddStore.st">
-	                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-	                                가게등록
-	                            </a>
-	                            <a class="nav-link" href="./CeoStoreList.st">
-	                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-	                               	가게리스트
-	                            </a>
-	                            <a class="nav-link" href="#">
-	                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-	                                가게정보수정
-	                            </a>
-                            </c:if>
-                            
-                        </div>
-                    </div>
+        <!-- inc mypage.jsp -->
+       		<jsp:include page="../inc/mypage.jsp"/>
+        <!-- inc mypage.jsp -->
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
                         Start Bootstrap
@@ -208,18 +180,22 @@ img {
 								<th>사진</th>
 								<th>식당 이름</th>
 								<th>주소</th>
-								<th>전화번호</th>
+								<th style="width: 150px">전화번호</th>
 								<th>카테고리</th>
-								<th>수정/삭제</th>
+								<th style="width: 250px">메뉴등록/수정/삭제</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="dto" items="${cStoreList }"> 
+							
 								<tr>
 									<td><img
 										src="./images/${dto.store_img.split(',')[0] }"
 										alt="식당 이미지"></td>
-						 			<td>${dto.store_name }</td>
+						 			<td>
+						 			<a href="./CeoMenuList.nu?store_no=${dto.store_no }" id="cMenu">${dto.store_name }</a>
+						 			</td>
+						 			
 									<td>
 										${dto.addr } <br>
 										${dto.addr_details }
@@ -227,13 +203,21 @@ img {
 									<td>${dto.tel }</td>
 									<td>${dto.store_category }</td>
 									<td>
+										<button class="btn-addmenu" onclick="location.href='./CeoMenuAdd.nu?store_no=${dto.store_no}'">메뉴등록</button>
 										<button class="btn-modify" onclick="location.href='./CeoStoreList.st?store_no=${dto.store_no}'">수정</button>
-										<button class="btn-delete">삭제</button>
+										<button class="btn-delete"  onclick="deleteStore(${dto.store_no})">삭제</button>
 									</td>
 							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					<script type="text/javascript">
+					 	function deleteStore(store_no) {
+					 		if(confirm('가게를 삭제하시겠습니까?')){
+					 			location.href="./CeoStoreDelete.st?store_no="+store_no;
+					 		}
+						}
+				    </script>
 					<c:if test="${cdto.store_no != null }">
 					   <h1 style="text-align: center;">식당 수정</h1>
 						<form method="post" action="./CeoStoreUpdate.st?store_no=${cdto.store_no }" enctype="multipart/form-data">
@@ -250,10 +234,10 @@ img {
 							<label for="tel">전화번호</label>
 							<input type="text" id="tel" name="tel" required value="${cdto.tel }"><br>
 					
-							<label for="open">영업 시간</label>
+							<label for="open">open</label>
 							<input type="text" id="open" name="open" required value="${cdto.open }"><br>
 					
-							<label for="close">정기 휴일</label>
+							<label for="close">close</label>
 							<input type="text" id="close" name="close" required value="${cdto.close }"><br>
 					
 							<label for="total_tables">총 좌석 수</label>
@@ -268,8 +252,22 @@ img {
 							<label for="store_content">식당 소개</label>
 							<textarea id="store_content" name="store_content" required >${cdto.store_content }</textarea><br>
 					
-							<label for="store_img">사진</label>
-							<input type="file" id="store_img" name="store_img" value="${cdto.store_img.split(',')[0] }"><br>
+							<label for="store_img">사진</label> 
+							<c:forEach var="img" items="${cdto.store_img.split(',')}">
+								<img src="./images/${img}" width="60px" height="60px">
+								<input type="checkbox" value="${img}" name="deleteImg">
+								<input type="hidden" name="existingImg" value="${img}">
+							</c:forEach>
+							
+							<input type="button" value="행 추가" onclick="javascript:addInputBox();"> 
+							<input type="hidden" name="count">
+							<table cellpadding=0 cellspacing=0  border="1">
+								<tr>
+									<table cellpadding=0 cellspacing=0 id="dynamic_table"
+										border="1">
+									</table>
+								</tr>
+							</table>
 					
 							<label for="refund_policy">환불 규정</label>
 							<textarea id="refund_policy" name="refund_policy" >${cdto.refund_policy }</textarea><br>

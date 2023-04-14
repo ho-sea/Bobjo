@@ -52,7 +52,7 @@ public class StoreDAO {
 	 * @param srch_data[2] == srch_text
 	 * @return int
 	 */
-	public int getStoreListSize(String[] srch_data) {
+	public int getTotalPage(String[] srch_data, int pageSize) {
 		int totalPage = 0;
 		
 		try {
@@ -64,14 +64,14 @@ public class StoreDAO {
 			sqlBuilder.append("where store_name like ? ");
 
 			if(!srch_data[0].equals("")) {
-				sqlBuilder.append("and substring_index(substring_index(s.addr,' ',2),' ',-1) in(");
+				sqlBuilder.append("and substring_index(substring_index(addr,' ',2),' ',-1) = '");
 				sqlBuilder.append(srch_data[0]);
-				sqlBuilder.append(") ");
+				sqlBuilder.append("' ");
 			}
 			if(!srch_data[1].equals("")) {
-				sqlBuilder.append("and s.store_category in(");
+				sqlBuilder.append("and store_category = '");
 				sqlBuilder.append(srch_data[1]);
-				sqlBuilder.append(") ");
+				sqlBuilder.append("' ");
 			}
 			
 			pstmt = con.prepareStatement(sqlBuilder.toString());
@@ -79,7 +79,7 @@ public class StoreDAO {
 
 			rs = pstmt.executeQuery();
 			rs.next();
-			totalPage = rs.getInt(1);
+			totalPage = rs.getInt(1)%pageSize == 0 ? rs.getInt(1)/pageSize : rs.getInt(1)/pageSize + 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,14 +115,14 @@ public class StoreDAO {
 			sqlBuilder.append("where s.store_name like ? ");
 
 			if(!srch_data[0].equals("")) {
-				sqlBuilder.append("and substring_index(substring_index(s.addr,' ',2),' ',-1) in(");
+				sqlBuilder.append("and substring_index(substring_index(s.addr,' ',2),' ',-1) = '");
 				sqlBuilder.append(srch_data[0]);
-				sqlBuilder.append(") ");
+				sqlBuilder.append("' ");
 			}
 			if(!srch_data[1].equals("")) {
-				sqlBuilder.append("and s.store_category in(");
+				sqlBuilder.append("and s.store_category = '");
 				sqlBuilder.append(srch_data[1]);
-				sqlBuilder.append(") ");
+				sqlBuilder.append("' ");
 			}
 			if(!srch_data[3].equals("")) {
 				sqlBuilder.append("order by r.");
@@ -136,7 +136,7 @@ public class StoreDAO {
 			pstmt.setString(1, "%"+srch_data[2]+"%");
 			pstmt.setInt(2, pageSize);
 			pstmt.setInt(3, (pageNum-1)*pageSize);
-
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -172,6 +172,7 @@ public class StoreDAO {
 				if (rs.next()) {
 					dto = new StoreDTO();
 					
+					dto.setStore_img(rs.getString("store_img"));
 					dto.setStore_name(rs.getString("store_name"));
 					dto.setStore_no(rs.getInt("store_no"));
 					dto.setAddr(rs.getString("addr"));
@@ -194,7 +195,6 @@ public class StoreDAO {
 					dto.setMinPrice(rs.getInt(1));
 					dto.setMaxPrice(rs.getInt(2));
 				}
-				System.out.println(" DAO : 가게 정보 조회성공!");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -318,7 +318,6 @@ public class StoreDAO {
 						pstmt.executeUpdate();
 						
 						System.out.println(" DAO : 가게정보 수정완료!");
-						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}finally {
@@ -326,6 +325,25 @@ public class StoreDAO {
 					}
 				}
 				// 가게 수정 
+				
+				// 다빈 - 가게 삭제
+				public void deleteStore(int store_no) {
+					try {
+						con = ConnectionManager.getConnection();
+						sql = "delete from bobjo_store where store_no=?";
+						pstmt = con.prepareStatement(sql);
+						pstmt.setInt(1, store_no);
+						pstmt.executeUpdate();
+						
+						System.out.println(" DAO : 가게 삭제 완료 !");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}finally {
+						ConnectionManager.closeConnection(rs, pstmt, con);
+					}
+				}
+				
+				// 가게 삭제
 		
 		
 }

@@ -1,7 +1,7 @@
 body {
   font-family: "Poppins", sans-serif;
   color: #040000;
-  background-color: #ffffff;
+  background-color: #e9ecef;
 }
 
 .layout_padding {
@@ -31,8 +31,8 @@ body {
 /*header section*/
 .sub_page .brand_box {
   position: relative;
-  background-image: url(../images/slider-img.jpg);
-  padding: 45px 0;
+  background: #ffffff;
+  padding: 20px 0;
 }
 
 .sub_page .nav_section {

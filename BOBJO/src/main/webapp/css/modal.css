@@ -15,8 +15,8 @@
 }
 
 .search{
-	width: 1500px;
-	height:600px;
+	width: auto;
+	height:480px;
 	position: fixed;
 	background-color: white;
 	border-radius: 3px;
@@ -43,7 +43,7 @@
     width: 200px;
 }
 
-.search input{
+#store-name{
 	outline: none;
 	border: none;
     width: 600px;
@@ -54,8 +54,12 @@
 
 .search form{
 	width:auto;
-	height:380px;
+	height:auto;
 	
+}
+
+input:-webkit-autofill {
+   -webkit-box-shadow: 0 0 0 1000px white inset;
 }
 
 #map-search{
@@ -63,6 +67,50 @@
     width: 500px;
     height: 40px;
     border: 1px solid black;
+    cursor: pointer;
+}
+
+#map{
+	display:none;
+	position:absolute;
+	background-color:#eaeaea;
+	width: 1920px;
+    height: -webkit-fill-available;
+    margin-left: -160px;
+	top:0;
+	left:0;
+	z-index:1002 !important;
+	animation: openMapSearch 0.5s ease forwards;
+}
+
+#map.active{
+	display:block;
+}
+
+#menu-category{
+	padding-left: 24px;
+}
+
+#seoul-district{
+	margin: 40px 0 0 20px;
+}
+
+html.no-scroll{
+	overflow:hidden;
+}
+
+#seoul{
+	margin-left: 480px;
+    margin-top: 100px;
+}
+
+#back-arrow{
+	width: 64px;
+    height: 64px;
+    top: 24px;
+    left: 24px;
+    position: absolute;
+    cursor: pointer;
 }
 
 #close-btn{
@@ -74,13 +122,50 @@
 	cursor: pointer;
 }
 
+#img-gps{
+	margin-right: -50px;
+}
+
+#svg-category{
+	margin-right: -50px;
+	position: relative;
+}
+
 #modal-title{
 	margin: 20px;
 	font-size: 3rem;
 	font-weight: 300;
 }
 
+#move-btn{
+	margin-left: -80px;
+	margin-right: 60px;
+	cursor: pointer;
+}
+
+#gotoTop{
+	display:none;
+	width: 75px;
+	position:fixed;
+	bottom:50px;
+	right:50px;
+	cursor:pointer;
+}
+
 @keyframes openModal{
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+select:focus {
+	outline: none;
+}
+
+@keyframes openMapSearch{
 	from {
 		opacity: 0;
 	}

@@ -93,7 +93,7 @@ font-size: 3rem;
 
 
 table tr{
-    background : beige;
+    background : white;
 }
 
 .row {
@@ -178,15 +178,11 @@ button.btn1{
 </head>
 
 <body class="sub_page">
-	<div class="hero_area">
-		<!-- header section strats -->
-		<div class="brand_box">
-			<a class="navbar-brand" href="../mainContent/index.html"> 
-			<span>BobJo! </span>
-			</a>
-		</div>
+	
+	
+	   <!-- header section  -->
+	 <jsp:include page="../inc/header3.jsp" />
 		<!-- end header section -->
-	</div>
 
 	<!-- nav section -->
 
@@ -247,7 +243,6 @@ button.btn1{
 			<div class="layout_padding2-top">
 				<div class="row">
 					<div class="col-lg-4 offset-lg-2 col-md-5 offset-md-1">
-						<form action="">
 							<div class="contact_form-container">
 								<div>
 									<div class="-item-rect -item-right -col6of12">
@@ -261,25 +256,27 @@ button.btn1{
 											<li><span ><img src="./img/watch.png" class="hours-icon"></span>OPEN : ${dto.open } <br>
 																											CLOSE : ${dto.close }</li>
 
-											<li><span></span><img src="./img/house.png" class="location-icon"></span> 주소 : ${dto.addr } <br>
+											<li><span><img src="./img/house.png" class="location-icon"></span> 주소 : ${dto.addr } <br>
 																												상세주소 : ${dto.addr_details }</li>
 										</ul>
 									</div>
 									<div>
-									  	<button class="btn1">
-											<a href="##"> 예약하기 
-										</button>
+									<form action="./ReservationAction.re" method="post" name="frm_rsrvAction">
+										<input type="hidden" name="store_no" value="${dto.store_no }">
+								  	  	<button class="btn1" type="submit">
+											예약하기
+								  	  	</button>
+									</form>
 									</div>
 								</div>
 							</div>
-						</form>
 					</div>
 					<div class="col-md-6 px-0">
 						<div class="map_container">
 							<div class="map-responsive">
 								<iframe
 									src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=
-									아이티윌"
+									${dto.store_name} ${dto.addr}"
 									width="600" height="300" frameborder="0"
 									style="border: 0; width: 100%; height: 100%" allowfullscreen></iframe>
 							</div>
@@ -295,10 +292,10 @@ button.btn1{
 	<div class="global-navigation">
 		<div class="container">
 			<ul>
-				<li class="-current"><a href="./StoreInfo.st?store_no=${dto.store_no }">가게상세정보</a></li>
-				<li ><a href="./StoreMenu.nu">메뉴</a></li>
-				<li ><a href="./StoreImg.st?store_no=${dto.store_no }">사진</a></li>
-				<li ><a href="#">리뷰</a></li>
+				<li class="-current"><a href="./StoreInfo.st?store_no=${dto.store_no}">가게상세정보</a></li>
+				<li ><a href="./StoreMenu.nu?store_no=${dto.store_no}">메뉴</a></li>
+				<li ><a href="./StoreImg.st?store_no=${dto.store_no}">사진</a></li>
+				<li ><a href="./ReviewList.rv?store_no=${dto.store_no}">리뷰</a></li>
 
 			</ul>
 
@@ -337,13 +334,9 @@ button.btn1{
 
 							<tr>
 								<th>영업시간</th>
-								<td>${dto.open }</td>
+								<td>${dto.open }~${dto.close }</td>
 							</tr>
 
-							<tr>
-								<th>휴무일</th>
-								<td>${dto.close }</td>
-							</tr>
 							<tr>
 								<th>환불규정</th>
 								<td>${dto.refund_policy }</td>
@@ -375,7 +368,7 @@ button.btn1{
 						</colgroup>
 						<tbody>
 							<tr>
-								<th>테이블 수</th>
+								<th>총 좌석 수</th>
 								<td>${dto.total_tables }</td>
 							</tr>
 							<tr>
@@ -459,80 +452,12 @@ button.btn1{
 
 	<!-- 내용넣기 끝  -->
 
-	<!-- info section -->
 
-	<section class="info_section layout_padding">
-		<div class="container">
-			<div class="info_logo">
-				<h2>bob jo!</h2>
-			</div>
-			<div class="info_contact">
-				<div class="row">
-					<div class="col-md-4">
-						<a href=""> <img src="../images/location.png" alt=""> <span>
-								Passages of Lorem Ipsum available </span>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<a href=""> <img src="../images/call.png" alt=""> <span>
-								Call : +012334567890 </span>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<a href=""> <img src="../images/mail.png" alt=""> <span>
-								bobjo@gmail.com </span>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 col-lg-9">
-					<div class="info_form">
-						<form action="">
-							<input type="text" placeholder="Enter your email">
-							<button>subscribe</button>
-						</form>
-					</div>
-				</div>
-				<div class="col-md-4 col-lg-3">
-					<div class="info_social">
-						<div>
-							<a href=""> <img src="../images/facebook-logo-button.png"
-								alt="">
-							</a>
-						</div>
-						<div>
-							<a href=""> <img src="../images/twitter-logo-button.png"
-								alt="">
-							</a>
-						</div>
-						<div>
-							<a href=""> <img src="../images/linkedin.png" alt="">
-							</a>
-						</div>
-						<div>
-							<a href=""> <img src="../images/instagram.png" alt="">
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
-
-	<!-- end info section -->
 
 
 	<!-- footer section -->
-	<section class="container-fluid footer_section">
-		<p>
-			&copy; <span id="displayYear"></span> All Rights Reserved By <a
-				href="https://html.design/">Free Html Templates</a>
-		</p>
-	</section>
+	<jsp:include page="../inc/footer.jsp" />
 	<!-- footer section -->
-
 
 	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="../js/bootstrap.js"></script>

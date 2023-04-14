@@ -33,15 +33,13 @@
 <link href="./css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="./css/responsive.css" rel="stylesheet" />
-
-<!--                 수정                              -->
+<!-- JQuery CDN -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<!--                 수     정                      -->
 <style type="text/css">
 a{
 color: black;
 }
-
-
-
 
 .global-navigation li {
 	background-color: #fff;
@@ -135,7 +133,7 @@ ol, ul {
 }
 
 
-.menu-icon, .price-icon, .tel-icon, .hours-icon, .location-icon {
+.menu-icon, .price-icon, .tel-icon, .hours-icon, .location-icon, .plus, .minus {
 width: 20px; 
 height: 20px;
 }
@@ -145,6 +143,9 @@ height: 20px;
 	display: flex;
 }
 
+.listStyle{
+list-style-position: inside;
+}
 .offset-lg-2 col-md-10 offset-md-1 {
 	display: list-item;
 }
@@ -161,11 +162,28 @@ button.btn1{
 	margin-left : 40px 
 
 }
+ /*  list에서 바스켓으로 보내는 장치에 대한 css  */
+.basketadd-container{
+display:flex;
+justify-content: space-between;
+margin: 60px 50px 0 200px; 
+width: 300px;
+}
+.basket_info1{
+margin-top: 25
 
+px; 
+font-size: 16px; 
+
+}
+
+
+
+ /*  list에서 바스켓으로 보내는 장치에 대한 css  */
 
 .container-menu {
    width : 1250px;
-   margin: 0 30% 30px 15%;
+   margin: -16px 30% 30px 15%;
    background: beige;
 }
 .row-col5 {
@@ -178,6 +196,14 @@ border-style: double ;
 .-item-left-col3of12 {
 padding: 0 0 0 10px;
 margin: 10px;
+width: 280px;
+}
+
+.-item-right-col3of12 {
+margin: 10px;
+flex-direction: row;
+width: 100px;
+
 }
 
 
@@ -188,6 +214,8 @@ border-style:double;
 border-right: 10px; 
 border-top: 10px; 
 border-bottom: 10px; 
+width: 500px;
+
 }
 .-item-left-col9of16 {
 padding-left: 10px; 
@@ -197,8 +225,177 @@ padding-left: 10px;
 padding-right: 20px; 
 }
 
+.row-wide-bottom {
+display: flex;
+justify-content:space-between;
+}
+
+button.basket{
+ width: 100px;
+ height: 60px;
+  border-radius: 8px
+ 
+}
+
+.menu_count{
+width: 70px;
+ height: 30px;
+ display: flex;
+}
+
+
+/*  바스켓설정   */
+.basketList li {
+box-sizing: border-box;
+background-color: #fff;
+	border-bottom: 1px solid #d8d8d8;
+	float: left;
+	display: table-row;
+	width: 10%;
+	height: auto;
+	margin: 0;
+	padding: 10px 30px ;
+	border: 0;
+	padding: 18px 0 15px;
+	color: black;
+	vertical-align: baseline;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+
+}
+
+button.clear{
+margin: 45px 0 0 622px;
+}
+
+.menu_header{
+padding-top: 10px;
+}
+
+
+.basket_con li{
+float: left;
+
+}
+.basket_con{
+margin: 20px 0 -50px;
+border: 1px solid black;
+
+width: auto;
+height: 240px;
+}
+.basket_title{
+width: 700px;
+height: 200px;
+
+}
+.basket_list{
+margin: 0;
+padding: 0;
+}
+.add_info_menu button:hover{
+background: black;
+}
+
+.minus_btn{
+width: 30px;
+height: 30px;
+background-image:url("./img/minus.png") ;
+
+}
+.plus_btn{
+width: 30px;
+height: 30px;
+background-image:url("./img/plus.png") ;
+}
+.little_price{
+display: flex;
+}
+
+input#sumPrice{
+ margin: 0 0 0 50px;
+ width: 150px; 
+ 
+}
+
+
+ /* 리스트 바스켓설정  */
+.basket_list li{
+padding: 5px 10px ;
+background: beige;
+border: 1px solid black; 
+margin: 0;
+}
+li.basket_menu_name{
+width: 390px;
+}
+li.basket_menu_price{
+width: 200px;
+}
+li.basket_menu_amount{
+width: 107px;
+}
+    /* 바스켓 안 리스트 설정  */
+.basket_list2{
+padding: 0;
+margin: 0;
+}
+.basket_list2 li{
+height: 50px;
+border: 1px dotted black;
+background: none;
+}
+li.basket_menu_nameli{
+padding: 10px;
+width: 390px;
+}
+li.basket_menu_priceli{
+padding: 10px;
+width: 200px;
+}
+li.basket_menu_amountli{
+padding: 10px;
+width: 84px;
+}
+.menu_sum{
+margin-top: 10px;
+}
+input.sum_price{
+width: 130px;
+margin: 30px 0;
+
+}
+
+
+/*  바스켓설정   */
 
 </style>
+
+<script type="text/javascript">
+
+function plusAmount(i) { 
+	var amount = document.getElementById("menu_amount["+i+"]").value++;
+	var price = document.getElementById("sum_price["+i+"]").value;
+    document.getElementById("sum_price["+i+"]").value = price/amount*(amount+1); 
+		
+	}
+
+function minusAmount(i) { 
+	var amount = document.getElementById("menu_amount["+i+"]").value--;
+	var price = document.getElementById("sum_price["+i+"]").value;
+	if (amount < 2){
+		alert("갯수는 1개 이상만 가능합니다.");
+		document.getElementById("menu_amount["+i+"]").value = 1;
+	}else {
+		document.getElementById("sum_price["+i+"]").value = price/amount*(amount-1);
+		
+	}
+	
+}
+
+
+</script>
 
 
 <!--                 수정                              -->
@@ -206,16 +403,11 @@ padding-right: 20px;
 </head>
 
 <body class="sub_page">
-	<div class="hero_area">
-		<!-- header section strats -->
-		<div class="brand_box">
-			<a class="navbar-brand" href="./mainContent/index.html"> 
-			<span>BobJo! </span>
-			</a>
-		</div>
-		<!-- end header section -->
-	</div>
-
+    
+     <!-- header   -->
+	 <jsp:include page="../inc/header3.jsp" />
+     <!-- header   -->
+     
 	<!-- nav section -->
 
 	<section class="nav_section">
@@ -243,12 +435,7 @@ padding-right: 20px;
 									href="./mainContent/testimonial.html"></a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="./mainContent/contact.html"></a></li>
-
-
 							</ul>
-
-
-
 						</div>
 					</div>
 				</nav>
@@ -267,7 +454,7 @@ padding-right: 20px;
 				<div class="offset-lg-2 col-md-10 offset-md-1">
 					<div class="heading_container">
 						<hr>
-						<h2 id="h2">가게이름</h2>
+						<h2 id="h2">${dto.store_name }</h2>
 					</div>
 				</div>
 			</div>
@@ -275,39 +462,43 @@ padding-right: 20px;
 			<div class="layout_padding2-top">
 				<div class="row">
 					<div class="col-lg-4 offset-lg-2 col-md-5 offset-md-1">
-						<form action="">
 							<div class="contact_form-container">
 								<div>
 									<div class="-item-rect -item-right -col6of12">
 										<ul class="icon-list -space sentence">
-											<li><span><img src="./img/blackbell.png" class="menu-icon"></span> 가게주메뉴 카테고리</li>
+											<li><span><img src="./img/blackbell.png" class="menu-icon"></span> ${dto.store_category }</li>
 
-											<li><span ><img src="./img/money.png" class="price-icon"></span> 가격대</li>
+											<li><span ><img src="./img/money.png" class="price-icon"></span> 가격대 ${dto.minPrice } ~ ${dto.maxPrice }</li>
 
-											<li><span ><img src="./img/phone.png" class="tel-icon"></span> 가게전화번호</li>
+											<li><span ><img src="./img/phone.png" class="tel-icon"></span> ${dto.tel }</li>
 
-											<li><span ><img src="./img/watch.png" class="hours-icon"></span>영업시간 Dinner: 17:00 -
-												22:30 Saturday &amp; Sunday &amp; Holiday Lunch: 11:30 -
-												16:00 , Dinner: 17:00 - 22:30</li>
+											<li><span ><img src="./img/watch.png" class="hours-icon"></span>OPEN : ${dto.open } <br>
+																											CLOSE : ${dto.close }</li>
 
-											<li><span></span><img src="./img/house.png" class="location-icon"></span> 주소 <br>상세주소</li>
+											<li><span><img src="./img/house.png" class="location-icon"></span> 주소 : ${dto.addr } <br>
+																												상세주소 : ${dto.addr_details }</li>
 										</ul>
 									</div>
+									<form action="./ReservationAction.re" method="post" name="frm_rsrvAction">
+										<input type="hidden" name="store_no" value="${dto.store_no }">
+										<input type="hidden" name="menu_no">
+										<input type="hidden" name="menu_amount" >
+										<input type="hidden" name="price">
+									</form>
 									<div>
-									  	<button class="btn1">
-											<a href="##"> 예약하기 
+									  	<button class="btn1" onclick="sendRequest()">
+											예약하기
 										</button>
 									</div>
 								</div>
 							</div>
-						</form>
 					</div>
 					<div class="col-md-6 px-0">
 						<div class="map_container">
 							<div class="map-responsive">
 								<iframe
 									src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=
-									아이티윌"
+									${dto.store_name} ${dto.addr}"
 									width="600" height="300" frameborder="0"
 									style="border: 0; width: 100%; height: 100%" allowfullscreen></iframe>
 							</div>
@@ -316,21 +507,49 @@ padding-right: 20px;
 				</div>
 			</div>
 		</div>
+		<!-- 장바구니 구현 -->
+		<div class="basket_list_con">
+		<div class="container">
+		<div class="basket_title">
+		<div class="basket_con">
+		<ul class="basket_list">
+		<li class="basket_menu_name"> 메뉴명 </li> 
+		<li class="basket_menu_price"> 가격 </li> 
+		<li class="basket_menu_amount"> 갯수 </li> 
+		</ul>
+		<form style="background: white;" action="./ReservationAction.re">
+		<div style="overflow:auto; width:700px; height:200px;">
+		<ul class="basket_list2">
+		</ul>
+        </div>
+		</form>
+		</div>
+		</div>
+		<div class="little_price">
+		<button class="clear" onclick="clearMap()">전체삭제</button>
+		<h3 style="margin: 10px 0 0 20px;"> = </h3>
+		<input id="sumPrice" type="text"  readonly/>
+		</div>
+		</div>
+		</div>
+		
+		
+		
+		<!-- 장바구니 구현 -->
 	</section>
 	<!-- end contact section -->
 
 	<!--   중간 머릿말   -->
 	<div class="global-navigation">
 		<div class="container">
-			<ul>
-				<li><a href="./StoreInfo.st?store_no=${dto.store_no }">가게상세정보</a></li>
-				<li class="-current"><a href="setting.menu.html">메뉴</a></li>
-				<li><a href="setting.img.html">사진</a></li>
-				<li><a href="setting.review.html">리뷰</a></li>
+			<ul class="listStyle">
+				<li ><a href="./StoreInfo.st?store_no=${dto.store_no}">가게상세정보</a></li>
+				<li class="-current"><a href="./StoreMenu.nu?store_no=${dto.store_no}">메뉴</a></li>
+				<li ><a href="./StoreImg.st?store_no=${dto.store_no}">사진</a></li>
+				<li ><a href="./ReviewList.rv?store_no=${dto.store_no}">리뷰</a></li>
 
 
 			</ul>
-
 		</div>
 	</div>
 
@@ -341,21 +560,19 @@ padding-right: 20px;
 	<br>
 	<br>
 	<br>
-	
-	
+		
 	<div class="main -left price-jpy">
 	<div class="container-menu">
-		<h2 class="jumbospacing-and-a-half">추천 메뉴</h2>
-		
-	    <c:forEach var="i" begin="0" end="menuList.size()-1" step="1" items="${menuList}">
+		<h2 class="menu_header">추천 메뉴</h2>
+	    <c:forEach var="i" begin="0" end="${menuList.size()-1}" step="1">
 			<div class="row-col5">
 				<div class="-item-left-col3of12">
 					<div class="figure -fit-220">
 						<a
-							href="https://gurunavi.com/ko/k774003/imgs/s_cm_01_011.jpg?dt=1678084632"
+							href="./images/${menuList[i].menu_img }"
 							class="cboxElement"> <img
-							src="https://gurunavi.com/ko/k774003/imgs/t_cm_01_011.jpg?dt=1678084632"
-							width="220" alt="${menuList[i].menu_no }" title="그 외 고기 구이, 곱창류"> <span
+							src="./images/${menuList[i].menu_img }"
+							width="220" alt="" title="${i+1}"> <span
 							class="-closeup"></span>
 						</a>
 					</div>
@@ -366,9 +583,9 @@ padding-right: 20px;
 						<div class="-item-right-col8of16">
 							<div class="right-spacing">
 								<div class="spacing">
-									<div class="small">${menuList[i].Menu_no}</div>
+									<div class="small">${i+1}</div>
 
-									<h3 class="huge abit-spacing">${dto.getMenu_name}</h3>
+									<h3 class="huge abit-spacing">${menuList[i].menu_name}</h3>
 
 								</div>
 								<div class="cx">
@@ -378,28 +595,112 @@ padding-right: 20px;
 						</div>
 					</div>
 
-					<div class="row -wide-bottom">
+					<div class="row-wide-bottom">
 						<div class="-item-left-col3of12">
 							<div class="panel-light-silver -in">
 								<ul class="spacing-list small">
-									<li><b class="b">메뉴정보 : </b> ${dto.getMenu_info}</li>
+									<li><b class="b">메뉴정보 : </b><br> ${menuList[i].menu_info}</li>
 								</ul> 
 							</div>
 						</div>
-
-						<div class="-item-right -col3of12">
+					
+						<div class="-item-right-col3of12">
 							<div class="right-spacing">
-								<ul class="menu-like-list small">
-									<li><span class="-value"> ${dto.getPrice}원 </span></li>
+								<ul class="menu-like-listsmall">
+									<li><span class="-value"> ${menuList[i].price}원 </span></li>
 								</ul>
 								<p class="text-right small">세금 포함</p>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	    </c:forEach>
+				<div class="basketadd-container">
+				<div class="add_info_menu">
+		       			 <div style="display:flex;vertical-align:top;">
+			      	 		 <input type="button" class="plus_btn" onclick="plusAmount(${i})">
+			      	 		 <input type="number" id="menu_amount[${i}]" value="1" class="menu_count" maxlength="10" min="1" readonly/>
+			      	 		 <input type="button" class="minus_btn"  onclick="minusAmount(${i})">
+        				</div>
+        				<div class="basket_info1"> 
+        				<input class="sum_price" type="text" id="sum_price[${i}]" value="${menuList[i].price}" readonly/>
+        				</div>
+    			</div>
+				
+				
+				<div>
+				<input type="hidden" id="menu_name[${i}]" value="${menuList[i].menu_name}">
+				<button class="basket" onclick="getMenu_amount(${menuList[i].menu_no}, ${i});" >
+				장바구니에 담기</button>
+				</div>
+				</div>
+				</div>
+	         </c:forEach>
+
+		         <script type="text/javascript">
+       				let map = new Map();
+	        		
+       				function getMenu_amount(menu_no, i) { 
+	        			
+	        			var amount = document.getElementById("menu_amount["+i+"]").value; 
+	        			var price = document.getElementById("sum_price["+i+"]").value;
+	        			var name = document.getElementById("menu_name["+i+"]").value;
+	        			
+	        			if (amount < 1){ 
+	        				alert("갯수는 1개 이상만 가능합니다."); 
+	        				document.getElementById("menu_amount["+i+"]").value = 1; 
+	        			}else if(amount >100){ 
+	        				alert("장난치지마십쇼!!");
+	        				document.getElementById("menu_amount["+i+"]").value = 1; 
+	        			}else{
+	        				let obj = new Object();
+	        				obj.price = price;
+	        				obj.name = name;
+	        				obj.amount = amount;
+	        				map.set(menu_no, obj);
+	        				
+	        				const iterator1 = map[Symbol.iterator]();
+
+	        				let htmlTXT = "";
+	        				var sumPrice = 0;
+	        				for (const item of iterator1) {
+	        					htmlTXT += "<li class='basket_menu_nameli'>"+item[1].name+"</li>"
+	        							+ "<li class='basket_menu_priceli'>"+item[1].price+"</li>"
+	        							+ "<li class='basket_menu_amountli'>"+item[1].amount+"</li>";
+	        							sumPrice += Number(item[1].price);
+	        				}
+	        				document.getElementsByClassName("basket_list2")[0].innerHTML = htmlTXT;
+	        				
+	        				document.getElementById("sumPrice").value = sumPrice; 
+	
+	        			}
+	        		 }
+       				
+       				function clearMap(){
+       					map = new Map();
+       					document.getElementsByClassName("basket_list2")[0].innerHTML = "";
+       					document.getElementById("sumPrice").value = "";
+       				}
+       				
+       				function sendRequest() {
+       					const iterator1 = map[Symbol.iterator]();
+
+       					let menu_no = "";
+       					let price = 0;
+       					let menu_amount = "";
+        				for (const item of iterator1) {
+        					menu_no += item[1].name + ",";
+        					menu_amount += item[1].amount + ",";
+        				}
+        				document.getElementsByName("menu_no")[0].value = menu_no;
+        				document.getElementsByName("menu_amount")[0].value = menu_amount;
+        				document.getElementsByName("price")[0].value = document.getElementById("sumPrice").value;
+        				
+        				document.frm_rsrvAction.submit();
+       				}
+       				
+       				
+ 				</script>
+
 		<div class="cassette triple-spacing">
 			<div class="row-col5">
 				<div class="-item-left-col9of16">
@@ -414,91 +715,23 @@ padding-right: 20px;
 				</div>
 			</div>
 		</div>
-</div>
+			</div>
+		</div>
 
 	
 
 
 	<!-- 내용넣기 끝  -->
 
-	<!-- info section -->
-
-	<section class="info_section layout_padding">
-		<div class="container">
-			<div class="info_logo">
-				<h2>NiNom</h2>
-			</div>
-			<div class="info_contact">
-				<div class="row">
-					<div class="col-md-4">
-						<a href=""> <img src="../images/location.png" alt=""> <span>
-								Passages of Lorem Ipsum available </span>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<a href=""> <img src="../images/call.png" alt=""> <span>
-								Call : +012334567890 </span>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<a href=""> <img src="../images/mail.png" alt=""> <span>
-								demo@gmail.com </span>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 col-lg-9">
-					<div class="info_form">
-						<form action="">
-							<input type="text" placeholder="Enter your email">
-							<button>subscribe</button>
-						</form>
-					</div>
-				</div>
-				<div class="col-md-4 col-lg-3">
-					<div class="info_social">
-						<div>
-							<a href=""> <img src="../images/facebook-logo-button.png"
-								alt="">
-							</a>
-						</div>
-						<div>
-							<a href=""> <img src="../images/twitter-logo-button.png"
-								alt="">
-							</a>
-						</div>
-						<div>
-							<a href=""> <img src="../images/linkedin.png" alt="">
-							</a>
-						</div>
-						<div>
-							<a href=""> <img src="../images/instagram.png" alt="">
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
-
-	<!-- end info section -->
-
 
 	<!-- footer section -->
-	<section class="container-fluid footer_section">
-		<p>
-			&copy; <span id="displayYear"></span> All Rights Reserved By <a
-				href="https://html.design/">Free Html Templates</a>
-		</p>
-	</section>
+	<jsp:include page="../inc/footer.jsp" />
 	<!-- footer section -->
 
 
-	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
-	<script type="text/javascript" src="../js/bootstrap.js"></script>
-	<script type="text/javascript" src="../js/custom.js"></script>
+	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.js"></script>
+	<script type="text/javascript" src="./js/custom.js"></script>
 
 </body>
 

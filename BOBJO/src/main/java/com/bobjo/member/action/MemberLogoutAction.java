@@ -20,7 +20,7 @@ public class MemberLogoutAction implements Action{
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		// 2. 컨트롤러 사용 X (JS)
+		    // 2. 컨트롤러 사용 X (JS)
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 				
